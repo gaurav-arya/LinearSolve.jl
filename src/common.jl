@@ -11,7 +11,7 @@ struct LinearCache{TA, Tb, Tu, Tp, Talg, Tc, Tl, Tr, Ttol, issquare}
     u::Tu
     p::Tp
     alg::Talg
-    cacheval::Tc  # store alg cache here
+    cacheval::Tc  # store alg cache here. for abstract factorization, this is something backslashable.
     isfresh::Bool # false => cacheval is set wrt A, true => update cacheval wrt A
     Pl::Tl        # preconditioners
     Pr::Tr

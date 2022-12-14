@@ -7,7 +7,7 @@ end
 
 function SciMLBase.solve(cache::LinearCache, alg::AbstractFactorization; kwargs...)
     if cache.isfresh
-        fact = do_factorization(alg, cache.A, cache.b, cache.u)
+        fact = do_factorization(alg, cache.A, cache.b, cache.u) # is this run too often? + can this mutate b?
         cache = set_cacheval(cache, fact)
     end
     y = _ldiv!(cache.u, cache.cacheval, cache.b)
@@ -112,6 +112,18 @@ function do_factorization(alg::SVDFactorization, A, b, u)
     fact = svd!(A; full = alg.full, alg = alg.alg)
     return fact
 end
+
+## MatrixFreeFactorization
+
+# TODO: should this be part of generic factoriation, part of polyalg, etc.
+struct MatrixFreeFactorization <: AbstractFactorization end
+
+function do_factorization(::MatrixFreeFactorization, A, b, u)
+    fact = LinearAlgebra.factorize(A)
+    SciMLOperators.cache_operator(fact, u)
+    return fact
+end
+
 
 ## GenericFactorization
 

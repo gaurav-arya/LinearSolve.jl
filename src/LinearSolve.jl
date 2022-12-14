@@ -17,6 +17,7 @@ using FastLapackInterface
 using DocStringExtensions
 import GPUArraysCore
 import Preferences
+using SciMLOperators: cache_operator
 
 # wrap
 import Krylov
@@ -84,7 +85,7 @@ end
 export LUFactorization, SVDFactorization, QRFactorization, GenericFactorization,
        GenericLUFactorization, SimpleLUFactorization, RFLUFactorization,
        UMFPACKFactorization, KLUFactorization, FastLUFactorization, FastQRFactorization,
-       SparspakFactorization
+       SparspakFactorization, MatrixFreeFactorization
 
 export LinearSolveFunction
 
