@@ -18,7 +18,7 @@ end
 # This should instead just create the factorization type.
 function init_cacheval(alg::AbstractFactorization, A, b, u, Pl, Pr, maxiters::Int, abstol,
                        reltol, verbose::Bool, assumptions::OperatorAssumptions)
-    do_factorization(alg, convert(AbstractMatrix, A), b, u)
+    do_factorization(alg, A, b, u)
 end
 
 ## LU Factorizations
@@ -120,7 +120,7 @@ struct MatrixFreeFactorization <: AbstractFactorization end
 
 function do_factorization(::MatrixFreeFactorization, A, b, u)
     fact = LinearAlgebra.factorize(A)
-    SciMLOperators.cache_operator(fact, u)
+    fact = cache_operator(fact, u)
     return fact
 end
 
